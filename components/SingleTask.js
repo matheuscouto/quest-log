@@ -96,7 +96,7 @@ const styles = ({done}) => StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderColor: done ? 'white' : 'black',
-    backgroundColor: done ? '#DDD' : 'white',
+    backgroundColor: done ? '#BBB' : 'white',
     borderWidth: 0.5,
     ...Platform.select({
       ios: {
