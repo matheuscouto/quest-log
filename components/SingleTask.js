@@ -11,28 +11,37 @@ import { Haptic } from 'expo';
 class SingleTask extends React.PureComponent {
   state = {}
   render() {
+    const { _handleFormatLeadingZeros, _handleCheck } = this;
     const { done } = this.state;
+    const { holdingDays } = this.props;
     const _styles = styles({done});
     return (
-      <TouchableWithoutFeedback onPressIn={this.handleCheck}>
+      <TouchableWithoutFeedback onPressIn={_handleCheck}>
         <View style={_styles.TaskWrapper}>
           <View style={_styles.TitleWrapper}>
             <Text style={_styles.Title}>My task title</Text>
             <Text style={_styles.SubTitle}>My task title</Text>
           </View>
           <View style={_styles.HoldingDays}>
-            <Text style={_styles.HoldingDaysText}>2</Text>
+            <Text style={_styles.HoldingDaysText}>{_handleFormatLeadingZeros(holdingDays)}</Text>
           </View>
         </View>
       </TouchableWithoutFeedback>
     )
   }
 
-  handleCheck = () => {
+  _handleCheck = () => {
     this.setState(state => ({
       done: !state.done
     }));
     Haptic.selection()
+  }
+
+  _handleFormatLeadingZeros = (number) => {
+    if(number.toString().length < 2) {
+      return '0' + number;
+    }
+    return number
   }
 }
 
@@ -82,8 +91,7 @@ const styles = ({done}) => StyleSheet.create({
     textDecorationLine: done ? 'line-through' : 'none'
   },
   HoldingDays: {
-    width: 20,
-    height: 20,
+    padding: 5,
     borderRadius: 50,
     justifyContent: 'center',
     alignItems: 'center',
