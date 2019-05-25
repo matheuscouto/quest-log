@@ -12,12 +12,16 @@ class SingleTask extends React.PureComponent {
   state = {}
   render() {
     const { done } = this.state;
+    const _styles = styles({done});
     return (
       <TouchableWithoutFeedback onPressIn={this.handleCheck}>
-        <View style={styles.TaskWrapper}>
-          <View style={styles.TitleWrapper}>
-            <Text style={{...styles.Title, textDecorationLine: done ? 'line-through' : 'none' }}>My task title</Text>
-            <Text style={{...styles.SubTitle, textDecorationLine: done ? 'line-through' : 'none' }}>My task title</Text>
+        <View style={_styles.TaskWrapper}>
+          <View style={_styles.TitleWrapper}>
+            <Text style={_styles.Title}>My task title</Text>
+            <Text style={_styles.SubTitle}>My task title</Text>
+          </View>
+          <View style={_styles.HoldingDays}>
+            <Text style={_styles.HoldingDaysText}>2</Text>
           </View>
         </View>
       </TouchableWithoutFeedback>
@@ -32,7 +36,7 @@ class SingleTask extends React.PureComponent {
   }
 }
 
-const styles = StyleSheet.create({
+const styles = ({done}) => StyleSheet.create({
   TaskWrapper: {
     backgroundColor: 'white',
     borderRadius: 13,
@@ -51,6 +55,7 @@ const styles = StyleSheet.create({
     marginVertical: 20,
     width: '100%',
     height: 80,
+    justifyContent: 'space-between',
     alignItems: 'center',
     alignSelf: 'center',
     flexDirection: 'row',
@@ -65,6 +70,7 @@ const styles = StyleSheet.create({
       android: 'notoserif'
     }),
     fontSize: 15,
+    textDecorationLine: done ? 'line-through' : 'none'
   },
   SubTitle: {
     fontFamily: Platform.select({
@@ -72,8 +78,37 @@ const styles = StyleSheet.create({
       android: 'notoserif'
     }),
     color: '#BABBCA',
-    fontSize: 12
-  }
+    fontSize: 12,
+    textDecorationLine: done ? 'line-through' : 'none'
+  },
+  HoldingDays: {
+    width: 20,
+    height: 20,
+    borderRadius: 50,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderColor: done ? 'white' : 'black',
+    backgroundColor: done ? '#DDD' : 'white',
+    borderWidth: 0.5,
+    ...Platform.select({
+      ios: {
+        shadowColor: 'gray',
+        shadowOffset: { height: 0, width: 0 },
+        shadowOpacity: 0.2,
+        shadowRadius: 15,
+      },
+      android: {
+        elevation: 20,
+      },
+    }),
+  },
+  HoldingDaysText: {
+    fontFamily: Platform.select({
+      ios: 'AmericanTypewriter',
+      android: 'notoserif'
+    }),
+    color: done ? 'white' : 'black'
+  },
 })
 
 export default SingleTask;
